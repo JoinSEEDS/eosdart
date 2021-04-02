@@ -60,7 +60,7 @@ class EOSClient {
   Future _post(String path, Object body) async {
     Completer completer = Completer();
     http
-        .post('${this._nodeURL}/${this._version}${path}',
+        .post(Uri.parse('${this._nodeURL}/${this._version}${path}'),
             body: json.encode(body))
         .timeout(Duration(seconds: this.httpTimeout))
         .then((http.Response response) {
