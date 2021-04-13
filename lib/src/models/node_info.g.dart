@@ -8,19 +8,19 @@ part of 'node_info.dart';
 
 NodeInfo _$NodeInfoFromJson(Map<String, dynamic> json) {
   return NodeInfo()
-    ..serverVersion = json['server_version'] as String
-    ..chainId = json['chain_id'] as String
+    ..serverVersion = json['server_version'] as String?
+    ..chainId = json['chain_id'] as String?
     ..headBlockNum = json['head_block_num'] == null
         ? null
         : ConversionHelper.getIntFromJson(json['head_block_num'])
     ..lastIrreversibleBlockNum = json['last_irreversible_block_num'] == null
         ? null
         : ConversionHelper.getIntFromJson(json['last_irreversible_block_num'])
-    ..lastIrreversibleBlockId = json['last_irreversible_block_id'] as String
+    ..lastIrreversibleBlockId = json['last_irreversible_block_id'] as String?
     ..headBlockTime = json['head_block_time'] == null
         ? null
         : DateTime.parse(json['head_block_time'] as String)
-    ..headBlockProducer = json['head_block_producer'] as String
+    ..headBlockProducer = json['head_block_producer'] as String?
     ..virtualBlockCpuLimit = json['virtual_block_cpu_limit'] == null
         ? null
         : ConversionHelper.getIntFromJson(json['virtual_block_cpu_limit'])
@@ -33,8 +33,8 @@ NodeInfo _$NodeInfoFromJson(Map<String, dynamic> json) {
     ..blockNetLimit = json['block_net_limit'] == null
         ? null
         : ConversionHelper.getIntFromJson(json['block_net_limit'])
-    ..serverVersionString = json['server_version_string'] as String
-    ..website = json['website'] as String;
+    ..serverVersionString = json['server_version_string'] as String?
+    ..website = json['website'] as String?;
 }
 
 Map<String, dynamic> _$NodeInfoToJson(NodeInfo instance) => <String, dynamic>{

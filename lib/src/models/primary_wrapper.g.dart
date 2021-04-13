@@ -9,7 +9,7 @@ part of 'primary_wrapper.dart';
 AccountNames _$AccountNamesFromJson(Map<String, dynamic> json) {
   return AccountNames()
     ..accountNames =
-        (json['account_names'] as List)?.map((e) => e as String)?.toList();
+        (json['account_names'] as List?)?.map((e) => e as String)?.toList();
 }
 
 Map<String, dynamic> _$AccountNamesToJson(AccountNames instance) =>
@@ -18,7 +18,7 @@ Map<String, dynamic> _$AccountNamesToJson(AccountNames instance) =>
 RequiredKeys _$RequiredKeysFromJson(Map<String, dynamic> json) {
   return RequiredKeys()
     ..requiredKeys =
-        (json['required_keys'] as List)?.map((e) => e as String)?.toList();
+        (json['required_keys'] as List?)?.map((e) => e as String)?.toList();
 }
 
 Map<String, dynamic> _$RequiredKeysToJson(RequiredKeys instance) =>

@@ -14,20 +14,20 @@ ActionWithReceipt _$ActionWithReceiptFromJson(Map<String, dynamic> json) {
     ..action = json['act'] == null
         ? null
         : Action.fromJson(json['act'] as Map<String, dynamic>)
-    ..contextFree = json['context_free'] as bool
-    ..elapsed = json['elapsed'] as int
-    ..console = json['console'] as String
-    ..trxId = json['trx_id'] as String
+    ..contextFree = json['context_free'] as bool?
+    ..elapsed = json['elapsed'] as int?
+    ..console = json['console'] as String?
+    ..trxId = json['trx_id'] as String?
     ..blockNum = json['block_num'] == null
         ? null
         : ConversionHelper.getIntFromJson(json['block_num'])
     ..blockTime = json['block_time'] == null
         ? null
         : DateTime.parse(json['block_time'] as String)
-    ..producerBlockId = json['producer_block_id'] as String
-    ..accountRamDeltas = json['account_ram_deltas'] as List
+    ..producerBlockId = json['producer_block_id'] as String?
+    ..accountRamDeltas = (json['account_ram_deltas'] as List?) as List<Object>?
     ..except = json['except']
-    ..inlineTraces = (json['inline_traces'] as List)
+    ..inlineTraces = (json['inline_traces'] as List?)
         ?.map((e) => e == null
             ? null
             : ActionWithReceipt.fromJson(e as Map<String, dynamic>))
@@ -52,9 +52,9 @@ Map<String, dynamic> _$ActionWithReceiptToJson(ActionWithReceipt instance) =>
 
 Action _$ActionFromJson(Map<String, dynamic> json) {
   return Action()
-    ..account = json['account'] as String
-    ..name = json['name'] as String
-    ..authorization = (json['authorization'] as List)
+    ..account = json['account'] as String?
+    ..name = json['name'] as String?
+    ..authorization = (json['authorization'] as List?)
         ?.map((e) => e == null
             ? null
             : Authorization.fromJson(e as Map<String, dynamic>))
@@ -72,10 +72,10 @@ Map<String, dynamic> _$ActionToJson(Action instance) => <String, dynamic>{
 
 ActionArgs _$ActionArgsFromJson(Map<String, dynamic> json) {
   return ActionArgs()
-    ..fromAccount = json['from'] as String
-    ..toAccount = json['to'] as String
-    ..quantity = json['quantity'] as String
-    ..memo = json['memo'] as String;
+    ..fromAccount = json['from'] as String?
+    ..toAccount = json['to'] as String?
+    ..quantity = json['quantity'] as String?
+    ..memo = json['memo'] as String?;
 }
 
 Map<String, dynamic> _$ActionArgsToJson(ActionArgs instance) =>
@@ -88,15 +88,15 @@ Map<String, dynamic> _$ActionArgsToJson(ActionArgs instance) =>
 
 ActionReceipt _$ActionReceiptFromJson(Map<String, dynamic> json) {
   return ActionReceipt()
-    ..receiver = json['receiver'] as String
-    ..actDigest = json['act_digest'] as String
+    ..receiver = json['receiver'] as String?
+    ..actDigest = json['act_digest'] as String?
     ..globalSequence = json['global_sequence'] == null
         ? null
         : ConversionHelper.getIntFromJson(json['global_sequence'])
     ..receiveSequence = json['recv_sequence'] == null
         ? null
         : ConversionHelper.getIntFromJson(json['recv_sequence'])
-    ..authSequence = json['auth_sequence'] as List
+    ..authSequence = (json['auth_sequence'] as List?) as List<Object>?
     ..codeSequence = json['code_sequence'] == null
         ? null
         : ConversionHelper.getIntFromJson(json['code_sequence'])
@@ -118,8 +118,8 @@ Map<String, dynamic> _$ActionReceiptToJson(ActionReceipt instance) =>
 
 Authorization _$AuthorizationFromJson(Map<String, dynamic> json) {
   return Authorization()
-    ..actor = json['actor'] as String
-    ..permission = json['permission'] as String;
+    ..actor = json['actor'] as String?
+    ..permission = json['permission'] as String?;
 }
 
 Map<String, dynamic> _$AuthorizationToJson(Authorization instance) =>

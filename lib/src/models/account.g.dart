@@ -7,11 +7,11 @@ part of 'account.dart';
 // **************************************************************************
 
 Account _$AccountFromJson(Map<String, dynamic> json) {
-  return Account(json['account_name'] as String, json['head_block_num'] as int)
+  return Account(json['account_name'] as String?, json['head_block_num'] as int?)
     ..headBlockTime = json['head_block_time'] == null
         ? null
         : DateTime.parse(json['head_block_time'] as String)
-    ..privileged = json['privileged'] as bool
+    ..privileged = json['privileged'] as bool?
     ..lastCodeUpdate = json['last_code_update'] == null
         ? null
         : DateTime.parse(json['last_code_update'] as String)
@@ -43,7 +43,7 @@ Account _$AccountFromJson(Map<String, dynamic> json) {
         ? null
         : TotalResources.fromJson(
             json['total_resources'] as Map<String, dynamic>)
-    ..permissions = (json['permissions'] as List)
+    ..permissions = (json['permissions'] as List?)
         ?.map((e) =>
             e == null ? null : Permission.fromJson(e as Map<String, dynamic>))
         ?.toList()
@@ -101,8 +101,8 @@ Map<String, dynamic> _$LimitToJson(Limit instance) => <String, dynamic>{
 
 Permission _$PermissionFromJson(Map<String, dynamic> json) {
   return Permission()
-    ..permName = json['perm_name'] as String
-    ..parent = json['parent'] as String
+    ..permName = json['perm_name'] as String?
+    ..parent = json['parent'] as String?
     ..requiredAuth = json['required_auth'] == null
         ? null
         : RequiredAuth.fromJson(json['required_auth'] as Map<String, dynamic>);
@@ -117,13 +117,13 @@ Map<String, dynamic> _$PermissionToJson(Permission instance) =>
 
 RequiredAuth _$RequiredAuthFromJson(Map<String, dynamic> json) {
   return RequiredAuth()
-    ..threshold = json['threshold'] as int
-    ..keys = (json['keys'] as List)
+    ..threshold = json['threshold'] as int?
+    ..keys = (json['keys'] as List?)
         ?.map((e) =>
             e == null ? null : AuthKey.fromJson(e as Map<String, dynamic>))
         ?.toList()
-    ..accounts = json['accounts'] as List
-    ..waits = json['waits'] as List;
+    ..accounts = (json['accounts'] as List?) as List<Object>?
+    ..waits = (json['waits'] as List?) as List<Object>?;
 }
 
 Map<String, dynamic> _$RequiredAuthToJson(RequiredAuth instance) =>
@@ -136,8 +136,8 @@ Map<String, dynamic> _$RequiredAuthToJson(RequiredAuth instance) =>
 
 AuthKey _$AuthKeyFromJson(Map<String, dynamic> json) {
   return AuthKey()
-    ..key = json['key'] as String
-    ..weight = json['weight'] as int;
+    ..key = json['key'] as String?
+    ..weight = json['weight'] as int?;
 }
 
 Map<String, dynamic> _$AuthKeyToJson(AuthKey instance) =>
@@ -145,7 +145,7 @@ Map<String, dynamic> _$AuthKeyToJson(AuthKey instance) =>
 
 TotalResources _$TotalResourcesFromJson(Map<String, dynamic> json) {
   return TotalResources()
-    ..owner = json['owner'] as String
+    ..owner = json['owner'] as String?
     ..netWeight = json['net_weight'] == null
         ? null
         : Holding.fromJson(json['net_weight'] as String)
@@ -168,8 +168,8 @@ Map<String, dynamic> _$TotalResourcesToJson(TotalResources instance) =>
 SelfDelegatedBandwidth _$SelfDelegatedBandwidthFromJson(
     Map<String, dynamic> json) {
   return SelfDelegatedBandwidth()
-    ..from = json['from'] as String
-    ..to = json['to'] as String
+    ..from = json['from'] as String?
+    ..to = json['to'] as String?
     ..netWeight = json['net_weight'] == null
         ? null
         : Holding.fromJson(json['net_weight'] as String)
@@ -189,7 +189,7 @@ Map<String, dynamic> _$SelfDelegatedBandwidthToJson(
 
 RefundRequest _$RefundRequestFromJson(Map<String, dynamic> json) {
   return RefundRequest()
-    ..owner = json['owner'] as String
+    ..owner = json['owner'] as String?
     ..requestTime = json['request_time'] == null
         ? null
         : DateTime.parse(json['request_time'] as String)
@@ -211,15 +211,15 @@ Map<String, dynamic> _$RefundRequestToJson(RefundRequest instance) =>
 
 VoterInfo _$VoterInfoFromJson(Map<String, dynamic> json) {
   return VoterInfo()
-    ..owner = json['owner'] as String
-    ..proxy = json['proxy'] as String
+    ..owner = json['owner'] as String?
+    ..proxy = json['proxy'] as String?
     ..producers = json['producers']
     ..staked = json['staked'] == null
         ? null
         : ConversionHelper.getIntFromJson(json['staked'])
-    ..lastVoteWeight = json['last_vote_weight'] as String
-    ..proxiedVoteWeight = json['proxied_vote_weight'] as String
-    ..isProxy = json['is_proxy'] as int;
+    ..lastVoteWeight = json['last_vote_weight'] as String?
+    ..proxiedVoteWeight = json['proxied_vote_weight'] as String?
+    ..isProxy = json['is_proxy'] as int?;
 }
 
 Map<String, dynamic> _$VoterInfoToJson(VoterInfo instance) => <String, dynamic>{

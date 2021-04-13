@@ -8,7 +8,7 @@ part of 'action_block.dart';
 
 Actions _$ActionsFromJson(Map<String, dynamic> json) {
   return Actions()
-    ..actions = (json['actions'] as List)
+    ..actions = (json['actions'] as List?)
         ?.map((e) =>
             e == null ? null : ActionBlock.fromJson(e as Map<String, dynamic>))
         ?.toList();

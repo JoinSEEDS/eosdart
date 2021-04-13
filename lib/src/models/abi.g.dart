@@ -8,10 +8,10 @@ part of 'abi.dart';
 
 AbiResp _$AbiRespFromJson(Map<String, dynamic> json) {
   return AbiResp()
-    ..accountName = json['account_name'] as String
-    ..codeHash = json['code_hash'] as String
-    ..abiHash = json['abi_hash'] as String
-    ..wasm = json['wasm'] as String
+    ..accountName = json['account_name'] as String?
+    ..codeHash = json['code_hash'] as String?
+    ..abiHash = json['abi_hash'] as String?
+    ..wasm = json['wasm'] as String?
     ..abi = json['abi'] == null ? null : AbiResp._decodeAbi(json['abi']);
 }
 
@@ -24,7 +24,7 @@ Map<String, dynamic> _$AbiRespToJson(AbiResp instance) => <String, dynamic>{
     };
 
 AbiType _$AbiTypeFromJson(Map<String, dynamic> json) {
-  return AbiType(json['new_type_name'] as String, json['type'] as String);
+  return AbiType(json['new_type_name'] as String?, json['type'] as String?);
 }
 
 Map<String, dynamic> _$AbiTypeToJson(AbiType instance) => <String, dynamic>{
@@ -33,7 +33,7 @@ Map<String, dynamic> _$AbiTypeToJson(AbiType instance) => <String, dynamic>{
     };
 
 AbiStructField _$AbiStructFieldFromJson(Map<String, dynamic> json) {
-  return AbiStructField(json['name'] as String, json['type'] as String);
+  return AbiStructField(json['name'] as String?, json['type'] as String?);
 }
 
 Map<String, dynamic> _$AbiStructFieldToJson(AbiStructField instance) =>
@@ -41,9 +41,9 @@ Map<String, dynamic> _$AbiStructFieldToJson(AbiStructField instance) =>
 
 AbiStruct _$AbiStructFromJson(Map<String, dynamic> json) {
   return AbiStruct(
-      json['name'] as String,
-      json['base'] as String,
-      (json['fields'] as List)
+      json['name'] as String?,
+      json['base'] as String?,
+      (json['fields'] as List?)
           ?.map((e) => e == null
               ? null
               : AbiStructField.fromJson(e as Map<String, dynamic>))
@@ -57,8 +57,8 @@ Map<String, dynamic> _$AbiStructToJson(AbiStruct instance) => <String, dynamic>{
     };
 
 AbiAction _$AbiActionFromJson(Map<String, dynamic> json) {
-  return AbiAction(json['name'] as String, json['type'] as String,
-      json['ricardian_contract'] as String);
+  return AbiAction(json['name'] as String?, json['type'] as String?,
+      json['ricardian_contract'] as String?);
 }
 
 Map<String, dynamic> _$AbiActionToJson(AbiAction instance) => <String, dynamic>{
@@ -69,11 +69,11 @@ Map<String, dynamic> _$AbiActionToJson(AbiAction instance) => <String, dynamic>{
 
 AbiTable _$AbiTableFromJson(Map<String, dynamic> json) {
   return AbiTable(
-      json['name'] as String,
-      json['type'] as String,
-      json['index_type'] as String,
-      (json['key_names'] as List)?.map((e) => e as String)?.toList(),
-      (json['key_types'] as List)?.map((e) => e as String)?.toList());
+      json['name'] as String?,
+      json['type'] as String?,
+      json['index_type'] as String?,
+      (json['key_names'] as List?)?.map((e) => e as String)?.toList(),
+      (json['key_types'] as List?)?.map((e) => e as String)?.toList());
 }
 
 Map<String, dynamic> _$AbiTableToJson(AbiTable instance) => <String, dynamic>{
@@ -85,7 +85,7 @@ Map<String, dynamic> _$AbiTableToJson(AbiTable instance) => <String, dynamic>{
     };
 
 AbiRicardianClauses _$AbiRicardianClausesFromJson(Map<String, dynamic> json) {
-  return AbiRicardianClauses(json['id'] as String, json['body'] as String);
+  return AbiRicardianClauses(json['id'] as String?, json['body'] as String?);
 }
 
 Map<String, dynamic> _$AbiRicardianClausesToJson(
@@ -94,7 +94,7 @@ Map<String, dynamic> _$AbiRicardianClausesToJson(
 
 AbiErrorMessages _$AbiErrorMessagesFromJson(Map<String, dynamic> json) {
   return AbiErrorMessages(
-      json['error_code'] as String, json['error_msg'] as String);
+      json['error_code'] as String?, json['error_msg'] as String?);
 }
 
 Map<String, dynamic> _$AbiErrorMessagesToJson(AbiErrorMessages instance) =>
@@ -104,15 +104,15 @@ Map<String, dynamic> _$AbiErrorMessagesToJson(AbiErrorMessages instance) =>
     };
 
 AbiExtensions _$AbiExtensionsFromJson(Map<String, dynamic> json) {
-  return AbiExtensions(json['tag'] as int, json['value'] as String);
+  return AbiExtensions(json['tag'] as int?, json['value'] as String?);
 }
 
 Map<String, dynamic> _$AbiExtensionsToJson(AbiExtensions instance) =>
     <String, dynamic>{'tag': instance.tag, 'value': instance.value};
 
 AbiVariants _$AbiVariantsFromJson(Map<String, dynamic> json) {
-  return AbiVariants(json['name'] as String,
-      (json['types'] as List)?.map((e) => e as String)?.toList());
+  return AbiVariants(json['name'] as String?,
+      (json['types'] as List?)?.map((e) => e as String)?.toList());
 }
 
 Map<String, dynamic> _$AbiVariantsToJson(AbiVariants instance) =>
@@ -120,43 +120,43 @@ Map<String, dynamic> _$AbiVariantsToJson(AbiVariants instance) =>
 
 Abi _$AbiFromJson(Map<String, dynamic> json) {
   return Abi(
-      abi_extensions: (json['abi_extensions'] as List)
+      abi_extensions: (json['abi_extensions'] as List?)
           ?.map((e) => e == null
               ? null
               : AbiExtensions.fromJson(e as Map<String, dynamic>))
           ?.toList(),
-      actions: (json['actions'] as List)
+      actions: (json['actions'] as List?)
           ?.map((e) =>
               e == null ? null : AbiAction.fromJson(e as Map<String, dynamic>))
           ?.toList(),
-      error_messages: (json['error_messages'] as List)
+      error_messages: (json['error_messages'] as List?)
           ?.map((e) => e == null
               ? null
               : AbiErrorMessages.fromJson(e as Map<String, dynamic>))
           ?.toList(),
-      ricardian_clauses: (json['ricardian_clauses'] as List)
+      ricardian_clauses: (json['ricardian_clauses'] as List?)
           ?.map((e) => e == null
               ? null
               : AbiRicardianClauses.fromJson(e as Map<String, dynamic>))
           ?.toList(),
-      structs: (json['structs'] as List)
+      structs: (json['structs'] as List?)
           ?.map((e) =>
               e == null ? null : AbiStruct.fromJson(e as Map<String, dynamic>))
           ?.toList(),
-      tables: (json['tables'] as List)
+      tables: (json['tables'] as List?)
           ?.map((e) =>
               e == null ? null : AbiTable.fromJson(e as Map<String, dynamic>))
           ?.toList(),
-      types: (json['types'] as List)
+      types: (json['types'] as List?)
           ?.map((e) =>
               e == null ? null : AbiType.fromJson(e as Map<String, dynamic>))
           ?.toList(),
-      variants: (json['variants'] as List)
+      variants: (json['variants'] as List?)
           ?.map((e) => e == null
               ? null
               : AbiVariants.fromJson(e as Map<String, dynamic>))
           ?.toList(),
-      version: json['version'] as String);
+      version: json['version'] as String?);
 }
 
 Map<String, dynamic> _$AbiToJson(Abi instance) => <String, dynamic>{
