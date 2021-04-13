@@ -27,8 +27,8 @@ class EOSClient {
   Map<String, ecc.EOSPrivateKey> keys = Map();
 
   /// Converts abi files between binary and structured form (`abi.abi.json`) */
-  Map<String, Type> abiTypes;
-  Map<String, Type> transactionTypes;
+  Map<String?, Type>? abiTypes;
+  late Map<String?, Type> transactionTypes;
 
   /// Construct the EOS client from eos node URL
   EOSClient(
@@ -82,7 +82,7 @@ class EOSClient {
   }
 
   /// Get table rows (eosio get table ...)
-  Future<List<Map<String, dynamic>>> getTableRows(
+  Future<List<Map<String, dynamic>>?> getTableRows(
     String code,
     String scope,
     String table, {
@@ -115,7 +115,7 @@ class EOSClient {
   }
 
   /// Get table row (eosio get table ...)
-  Future<Map<String, dynamic>> getTableRow(
+  Future<Map<String, dynamic>?> getTableRow(
     String code,
     String scope,
     String table, {
@@ -127,7 +127,7 @@ class EOSClient {
     String keyType = '',
     bool reverse = false,
   }) async {
-    var rows = await getTableRows(
+    var rows = await (getTableRows(
       code,
       scope,
       table,
@@ -139,7 +139,7 @@ class EOSClient {
       keyType: keyType,
       limit: 1,
       reverse: reverse,
-    );
+    ) as FutureOr<List<Map<String, dynamic>>>);
 
     return rows.length > 0 ? rows[0] : null;
   }
@@ -169,7 +169,7 @@ class EOSClient {
   }
 
   /// Get EOS raw abi from account name
-  Future<AbiResp> getRawAbi(String accountName) async {
+  Future<AbiResp> getRawAbi(String? accountName) async {
     return this
         ._post('/chain/get_raw_abi', {'account_name': accountName}).then((abi) {
       return AbiResp.fromJson(abi);
@@ -194,7 +194,7 @@ class EOSClient {
 
   /// Get EOS account info form the given account name
   Future<List<Holding>> getCurrencyBalance(String code, String account,
-      [String symbol]) async {
+      [String? symbol]) async {
     return this._post('/chain/get_currency_balance',
         {'code': code, 'account': account, 'symbol': symbol}).then((balance) {
       return (balance as List).map((e) => new Holding.fromJson(e)).toList();
@@ -221,7 +221,7 @@ class EOSClient {
   }
 
   /// Get EOS account actions
-  Future<Actions> getActions(String accountName, {int pos, int offset}) async {
+  Future<Actions> getActions(String accountName, {int? pos, int? offset}) async {
     return this._post('/history/get_actions', {
       'account_name': accountName,
       'pot': pos,
@@ -232,7 +232,7 @@ class EOSClient {
   }
 
   /// Get EOS transaction
-  Future<TransactionBlock> getTransaction(String id, {int blockNumHint}) async {
+  Future<TransactionBlock> getTransaction(String id, {int? blockNumHint}) async {
     return this._post('/history/get_transaction',
         {'id': id, 'block_num_hint': blockNumHint}).then((transaction) {
       return TransactionBlock.fromJson(transaction);
@@ -255,11 +255,11 @@ class EOSClient {
       int expireSecond = 180}) async {
     NodeInfo info = await this.getInfo();
     Block refBlock =
-        await getBlock((info.headBlockNum - blocksBehind).toString());
+        await getBlock((info.headBlockNum! - blocksBehind).toString());
 
     Transaction trx = await _fullFill(transaction, refBlock);
     PushTransactionArgs pushTransactionArgs = await _pushTransactionArgs(
-        info.chainId, transactionTypes['transaction'], trx, sign);
+        info.chainId, transactionTypes['transaction']!, trx, sign);
 
     if (broadcast) {
       return this._post('/chain/push_transaction', {
@@ -276,12 +276,12 @@ class EOSClient {
   }
 
   /// Get data needed to serialize actions in a contract */
-  Future<Contract> _getContract(String accountName,
+  Future<Contract> _getContract(String? accountName,
       {bool reload = false}) async {
     var abi = await getRawAbi(accountName);
-    var types = ser.getTypesFromAbi(ser.createInitialTypes(), abi.abi);
-    var actions = new Map<String, Type>();
-    for (var act in abi.abi.actions) {
+    var types = ser.getTypesFromAbi(ser.createInitialTypes(), abi.abi!);
+    var actions = new Map<String?, Type>();
+    for (var act in abi.abi!.actions!) {
       actions[act.name] = ser.getType(types, act.type);
     }
     var result = Contract(types, actions);
@@ -291,8 +291,8 @@ class EOSClient {
   /// Fill the transaction withe reference block data
   Future<Transaction> _fullFill(Transaction transaction, Block refBlock) async {
     transaction.expiration =
-        refBlock.timestamp.add(Duration(seconds: expirationInSec));
-    transaction.refBlockNum = refBlock.blockNum & 0xffff;
+        refBlock.timestamp!.add(Duration(seconds: expirationInSec));
+    transaction.refBlockNum = refBlock.blockNum! & 0xffff;
     transaction.refBlockPrefix = refBlock.refBlockPrefix;
 
     return transaction;
@@ -300,8 +300,8 @@ class EOSClient {
 
   /// serialize actions in a transaction
   Future<Transaction> _serializeActions(Transaction transaction) async {
-    for (Action action in transaction.actions) {
-      String account = action.account;
+    for (Action action in transaction.actions!) {
+      String? account = action.account;
 
       Contract contract = await _getContract(account);
 
@@ -313,13 +313,13 @@ class EOSClient {
 
   /// Convert action data to serialized form (hex) */
   String _serializeActionData(
-      Contract contract, String account, String name, Object data) {
+      Contract contract, String? account, String? name, Object? data) {
     var action = contract.actions[name];
     if (action == null) {
       throw "Unknown action $name in contract $account";
     }
     var buffer = new ser.SerialBuffer(Uint8List(0));
-    action.serialize(action, buffer, data);
+    action.serialize!(action, buffer, data);
     return ser.arrayToHex(buffer.asUint8List());
   }
 
@@ -336,7 +336,7 @@ class EOSClient {
 //    }
 //  }
 
-  Future<PushTransactionArgs> _pushTransactionArgs(String chainId,
+  Future<PushTransactionArgs> _pushTransactionArgs(String? chainId,
       Type transactionType, Transaction transaction, bool sign) async {
     List<String> signatures = [];
 
@@ -346,12 +346,12 @@ class EOSClient {
     Uint8List serializedTrx = transaction.toBinary(transactionType);
 
     if (sign) {
-      Uint8List signBuf = Uint8List.fromList(List.from(ser.stringToHex(chainId))
+      Uint8List signBuf = Uint8List.fromList(List.from(ser.stringToHex(chainId!))
         ..addAll(serializedTrx)
         ..addAll(Uint8List(32)));
 
-      for (String publicKey in requiredKeys.requiredKeys) {
-        ecc.EOSPrivateKey pKey = this.keys[publicKey];
+      for (String publicKey in requiredKeys.requiredKeys!) {
+        ecc.EOSPrivateKey pKey = this.keys[publicKey]!;
         signatures.add(pKey.sign(signBuf).toString());
       }
     }

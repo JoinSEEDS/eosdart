@@ -1,39 +1,39 @@
 /// A field in an abi */
 class Field {
   /// Field name */
-  String name;
+  String? name;
 
   /// Type name in string form */
-  String typeName;
+  String? typeName;
 
   /// Type of the field */
-  Type type;
+  Type? type;
 
   Field({this.name, this.type, this.typeName});
 }
 
 class Type {
-  String name;
+  String? name;
 
-  String aliasOfName;
+  String? aliasOfName;
 
-  Type arrayOf;
+  Type? arrayOf;
 
-  Type optionalOf;
+  Type? optionalOf;
 
-  Type extensionOf;
+  Type? extensionOf;
 
-  String baseName;
+  String? baseName;
 
-  Type base;
+  Type? base;
 
-  List<Field> fields;
+  List<Field>? fields;
 
-  Function serialize;
+  Function? serialize;
 
 //  void Function(Type self,SerialBuffer buffer, Object data, {SerializerState state,bool allowExtensions}) serialize;
 
-  Function deserialize;
+  Function? deserialize;
 
   Type(
       {this.name,
@@ -49,9 +49,9 @@ class Type {
 }
 
 class Contract {
-  Map<String, Type> actions;
+  Map<String?, Type> actions;
 
-  Map<String, Type> types;
+  Map<String?, Type> types;
 
   Contract(this.types, this.actions);
 }
@@ -59,10 +59,10 @@ class Contract {
 /// Structural representation of a symbol */
 class Symbol {
   /// Name of the symbol, not including precision */
-  final String name;
+  final String? name;
 
   /// Number of digits after the decimal point */
-  final int precision;
+  final int? precision;
 
   Symbol({this.name, this.precision});
 }
