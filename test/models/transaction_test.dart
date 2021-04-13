@@ -21,10 +21,10 @@ void main() {
       expect(transaction.blockNum, 44072766);
       expect(transaction.lastIrreversibleBlock, 44075018);
       expect(transaction.traces!.length, 1);
-      expect(transaction.traces![0].receipt!.receiver, 'pretonarts11');
-      expect(transaction.traces![0].action!.account, 'pretonarts11');
-      expect(transaction.traces![0].action!.name, 'chooseserver');
-      expect(transaction.traces![0].producerBlockId,
+      expect(transaction.traces![0]?.receipt!.receiver, 'pretonarts11');
+      expect(transaction.traces![0]?.action!.account, 'pretonarts11');
+      expect(transaction.traces![0]?.action!.name, 'chooseserver');
+      expect(transaction.traces![0]?.producerBlockId,
           '02a07f3e8e112558b58e7027ae614336cf77b45980df9693219f77e7a2d0349e');
     });
 
@@ -43,10 +43,10 @@ void main() {
       expect(transaction.blockNum, 44072766);
       expect(transaction.lastIrreversibleBlock, 44075150);
       expect(transaction.traces!.length, 2);
-      expect(transaction.traces![0].receipt!.receiver, 'xuxxxxxxxxxx');
-      expect(transaction.traces![0].action!.account, 'eosio.token');
-      expect(transaction.traces![0].action!.name, 'transfer');
-      expect(transaction.traces![0].producerBlockId,
+      expect(transaction.traces![0]?.receipt!.receiver, 'xuxxxxxxxxxx');
+      expect(transaction.traces![0]?.action!.account, 'eosio.token');
+      expect(transaction.traces![0]?.action!.name, 'transfer');
+      expect(transaction.traces![0]?.producerBlockId,
           '02a07f3e8e112558b58e7027ae614336cf77b45980df9693219f77e7a2d0349e');
     });
 
@@ -70,10 +70,10 @@ void main() {
       expect(transaction.processed!.netUsage, 128);
       expect(transaction.processed!.scheduled, false);
       expect(transaction.processed!.actionTraces!.isNotEmpty, true);
-      expect(transaction.processed!.actionTraces!.first.action!.name, 'transfer');
-      expect(transaction.processed!.actionTraces!.first.action!.data.toString(),
+      expect(transaction.processed!.actionTraces!.first!.action!.name, 'transfer');
+      expect(transaction.processed!.actionTraces!.first!.action!.data.toString(),
           '{from: account1, to: account2, quantity: 1.00000000 EOS, memo: }');
-      expect(transaction.processed!.actionTraces!.first.action!.account,
+      expect(transaction.processed!.actionTraces!.first!.action!.account,
           'eosio.token');
     });
   });

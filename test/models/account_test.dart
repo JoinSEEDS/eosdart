@@ -34,13 +34,13 @@ void main() {
       expect(account.ramUsage, 3686);
       expect(account.permissions, isList);
       expect(account.permissions!.length, 2);
-      expect(account.permissions![0].permName, 'active');
-      expect(account.permissions![0].requiredAuth!.threshold, 1);
-      expect(account.permissions![0].requiredAuth!.keys, isList);
-      expect(account.permissions![0].requiredAuth!.keys!.length, 1);
-      expect(account.permissions![0].requiredAuth!.keys![0].key,
+      expect(account.permissions![0]?.permName, 'active');
+      expect(account.permissions![0]?.requiredAuth!.threshold, 1);
+      expect(account.permissions![0]?.requiredAuth!.keys, isList);
+      expect(account.permissions![0]?.requiredAuth!.keys!.length, 1);
+      expect(account.permissions![0]?.requiredAuth!.keys![0]?.key,
           'EOS5GZ7R4BsApfxKcSbHeBEeFavsu9b75ooXM6pf5fo5G4ZbSWBMX');
-      expect(account.permissions![0].requiredAuth!.keys![0].weight, 1);
+      expect(account.permissions![0]?.requiredAuth!.keys![0]?.weight, 1);
       expect(account.totalResources!.owner, 'binancecold1');
       expect(account.totalResources!.netWeight!.amount, 100.05);
       expect(account.totalResources!.netWeight!.currency, 'EOS');

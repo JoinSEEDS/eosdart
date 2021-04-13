@@ -38,16 +38,16 @@ class Block with ConversionHelper {
   Object? newProducers;
 
   @JsonKey(name: 'header_extensions')
-  List<Object>? headerExtensions;
+  List<Object?>? headerExtensions;
 
   @JsonKey(name: 'producer_signature')
   String? producerSignature;
 
   @JsonKey(name: 'transactions')
-  List<TransactionReceipt>? transactions;
+  List<TransactionReceipt?>? transactions;
 
   @JsonKey(name: 'block_extensions')
-  List<Object>? blockExtensions;
+  List<Object?>? blockExtensions;
 
   @JsonKey(name: 'ref_block_prefix')
   int? refBlockPrefix;

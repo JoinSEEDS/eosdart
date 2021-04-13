@@ -282,7 +282,7 @@ class EOSClient {
     var types = ser.getTypesFromAbi(ser.createInitialTypes(), abi.abi!);
     var actions = new Map<String?, Type>();
     for (var act in abi.abi!.actions!) {
-      actions[act.name] = ser.getType(types, act.type);
+      actions[act?.name] = ser.getType(types, act?.type);
     }
     var result = Contract(types, actions);
     return result;
@@ -300,12 +300,12 @@ class EOSClient {
 
   /// serialize actions in a transaction
   Future<Transaction> _serializeActions(Transaction transaction) async {
-    for (Action action in transaction.actions!) {
-      String? account = action.account;
+    for (Action? action in transaction.actions!) {
+      String? account = action?.account;
 
       Contract contract = await _getContract(account);
 
-      action.data =
+      action?.data =
           _serializeActionData(contract, account, action.name, action.data);
     }
     return transaction;

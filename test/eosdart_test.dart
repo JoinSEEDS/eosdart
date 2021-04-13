@@ -77,9 +77,9 @@ void main() {
         expect(transaction.trx!.receipt!.cpuUsageUs, 132);
         expect(transaction.trx!.receipt!.netUsageWords, 0);
         expect(transaction.traces!.length, 2);
-        expect(transaction.traces![0].receipt!.receiver, 'trustdicelog');
-        expect(transaction.traces![0].inlineTraces!.length, 1);
-        expect(transaction.traces![0].inlineTraces![0].receipt!.receiver,
+        expect(transaction.traces![0]!.receipt!.receiver, 'trustdicelog');
+        expect(transaction.traces![0]!.inlineTraces!.length, 1);
+        expect(transaction.traces![0]!.inlineTraces![0]!.receipt!.receiver,
             'ge4tcnrxgyge');
       });
     });

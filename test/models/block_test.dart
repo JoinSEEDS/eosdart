@@ -22,9 +22,9 @@ void main() {
           '02a07f3e8e112558b58e7027ae614336cf77b45980df9693219f77e7a2d0349e');
       expect(block.refBlockPrefix, 661687989);
       expect(block.transactions!.length > 10, isTrue);
-      expect(block.transactions![0].status, 'executed');
-      expect(block.transactions![0].cpuUsageUs, 444);
-      expect(block.transactions![0].netUsageWords, 0);
+      expect(block.transactions![0]?.status, 'executed');
+      expect(block.transactions![0]?.cpuUsageUs, 444);
+      expect(block.transactions![0]?.netUsageWords, 0);
     });
   });
 }

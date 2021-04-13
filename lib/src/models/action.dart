@@ -34,13 +34,13 @@ class ActionWithReceipt with ConversionHelper {
   String? producerBlockId;
 
   @JsonKey(name: 'account_ram_deltas')
-  List<Object>? accountRamDeltas;
+  List<Object?>? accountRamDeltas;
 
   @JsonKey(name: 'except')
   Object? except;
 
   @JsonKey(name: 'inline_traces')
-  List<ActionWithReceipt>? inlineTraces;
+  List<ActionWithReceipt?>? inlineTraces;
 
   ActionWithReceipt();
 
@@ -62,7 +62,7 @@ class Action {
   String? name;
 
   @JsonKey(name: 'authorization')
-  List<Authorization>? authorization;
+  List<Authorization?>? authorization;
 
   @JsonKey(name: 'data')
   Object? data;
@@ -120,7 +120,7 @@ class ActionReceipt with ConversionHelper {
   int? receiveSequence;
 
   @JsonKey(name: 'auth_sequence')
-  List<Object>? authSequence;
+  List<Object?>? authSequence;
 
   @JsonKey(name: 'code_sequence', fromJson: ConversionHelper.getIntFromJson)
   int? codeSequence;

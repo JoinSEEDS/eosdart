@@ -8,7 +8,7 @@ part 'action_block.g.dart';
 @JsonSerializable()
 class Actions {
   @JsonKey(name: 'actions')
-  List<ActionBlock>? actions;
+  List<ActionBlock?>? actions;
 
   Actions();
 

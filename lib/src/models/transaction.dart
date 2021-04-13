@@ -28,7 +28,7 @@ class TransactionBlock with ConversionHelper {
   int? lastIrreversibleBlock;
 
   @JsonKey(name: 'traces')
-  List<ActionWithReceipt>? traces;
+  List<ActionWithReceipt?>? traces;
 
   TransactionBlock();
 
@@ -106,19 +106,19 @@ class Transaction {
   int? delaySec = 0;
 
   @JsonKey(name: 'context_free_actions')
-  List<Object>? contextFreeActions = [];
+  List<Object?>? contextFreeActions = [];
 
   @JsonKey(name: 'actions')
-  List<Action>? actions = [];
+  List<Action?>? actions = [];
 
   @JsonKey(name: 'transaction_extensions')
-  List<Object>? transactionExtensions = [];
+  List<Object?>? transactionExtensions = [];
 
   @JsonKey(name: 'signatures')
   List<String>? signatures = [];
 
   @JsonKey(name: 'context_free_data')
-  List<Object>? contextFreeData = [];
+  List<Object?>? contextFreeData = [];
 
   Transaction();
 
@@ -183,7 +183,7 @@ class TransactionProcessed with ConversionHelper {
   bool? scheduled;
 
   @JsonKey(name: 'action_traces')
-  List<ActionWithReceipt>? actionTraces;
+  List<ActionWithReceipt?>? actionTraces;
 
   TransactionProcessed();
 

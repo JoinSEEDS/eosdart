@@ -27,7 +27,7 @@ class SerializerState {
 /// Serialize and deserialize data */
 class SerialBuffer {
   /// Amount of valid data in `array` */
-  int? length;
+  int length = 0;
 
   /// Data in serialized (binary) form */
   Uint8List array;
@@ -663,7 +663,7 @@ Map<String, Type> createInitialTypes() {
       name: 'bool',
       serialize: (Type self, SerialBuffer buffer, Object data,
           {SerializerState? state, bool? allowExtensions}) {
-        buffer.push([data ? 1 : 0]);
+        buffer.push([data == null ? 1 : 0]);
       },
       deserialize: (Type self, SerialBuffer buffer,
           {SerializerState? state, bool? allowExtensions}) {
@@ -1163,18 +1163,18 @@ Map<String?, Type> getTypesFromAbi(Map<String, Type> initialTypes, Abi abi) {
   var types = Map.from(initialTypes).cast<String?, Type>();
   if (abi.types != null) {
     for (var item in abi.types!) {
-      types[item.new_type_name] =
-          createType(name: item.new_type_name, aliasOfName: item.type);
+      types[item?.new_type_name] =
+          createType(name: item?.new_type_name, aliasOfName: item?.type);
     }
   }
   if (abi.structs != null) {
     for (var str in abi.structs!) {
-      types[str.name] = createType(
+      types[str!.name] = createType(
           name: str.name,
           baseName: str.base,
           fields: str.fields
               ?.map((item) =>
-                  Field(name: item.name, typeName: item.type, type: null))
+                  Field(name: item!.name, typeName: item.type, type: null))
               ?.toList(),
           serialize: serializeStruct,
           deserialize: deserializeStruct);
@@ -1182,7 +1182,7 @@ Map<String?, Type> getTypesFromAbi(Map<String, Type> initialTypes, Abi abi) {
   }
   if (abi.variants != null) {
     for (var v in abi.variants!) {
-      types[v.name] = createType(
+      types[v!.name] = createType(
         name: v.name,
         fields: v.types
             ?.map((s) => Field(name: s, typeName: s, type: null))

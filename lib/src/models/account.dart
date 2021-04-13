@@ -50,7 +50,7 @@ class Account with ConversionHelper {
   TotalResources? totalResources;
 
   @JsonKey(name: 'permissions')
-  List<Permission>? permissions;
+  List<Permission?>? permissions;
 
   @JsonKey(name: 'self_delegated_bandwidth')
   SelfDelegatedBandwidth? selfDelegatedBandwidth;
@@ -144,13 +144,13 @@ class RequiredAuth {
   int? threshold;
 
   @JsonKey(name: 'keys')
-  List<AuthKey>? keys;
+  List<AuthKey?>? keys;
 
   @JsonKey(name: 'accounts')
-  List<Object>? accounts;
+  List<Object?>? accounts;
 
   @JsonKey(name: 'waits')
-  List<Object>? waits;
+  List<Object?>? waits;
 
   RequiredAuth();
 

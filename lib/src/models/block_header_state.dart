@@ -48,10 +48,10 @@ class BlockHeaderState with ConversionHelper {
   BlockRootMerkle? blockrootMerkle;
 
   @JsonKey(name: 'producer_to_last_produced')
-  List<List<Object>>? producerToLastProduced;
+  List<List<Object?>?>? producerToLastProduced;
 
   @JsonKey(name: 'producer_to_last_implied_irb')
-  List<List<Object>>? producerToLastImpliedIrb;
+  List<List<Object?>?>? producerToLastImpliedIrb;
 
   @JsonKey(name: 'block_signing_key')
   String? blockSigningKey;
@@ -60,7 +60,7 @@ class BlockHeaderState with ConversionHelper {
   List<int>? confirmCount;
 
   @JsonKey(name: 'confirmations')
-  List<Object>? confirmations;
+  List<Object?>? confirmations;
 
   BlockHeaderState();
 
@@ -97,7 +97,7 @@ class Header {
   int? scheduleVersion;
 
   @JsonKey(name: 'header_extensions')
-  List<Object>? headerExtensions;
+  List<Object?>? headerExtensions;
 
   @JsonKey(name: 'producer_signature')
   String? producerSignature;
@@ -118,7 +118,7 @@ class Schedule {
   int? version;
 
   @JsonKey(name: 'producers')
-  List<Producer>? producers;
+  List<Producer?>? producers;
 
   Schedule();
 

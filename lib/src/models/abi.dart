@@ -63,7 +63,7 @@ class AbiResp with ConversionHelper {
       var b = t.deserialize!(t, buffer);
       return Abi.fromJson(json.decode(json.encode(b)));
     } catch (e) {
-      print(e.message);
+      print(e.toString());
       return null;
     }
   }
@@ -119,7 +119,7 @@ class AbiStruct {
   String? base;
 
   @JsonKey(name: 'fields')
-  List<AbiStructField>? fields;
+  List<AbiStructField?>? fields;
 
   AbiStruct(this.name, this.base, this.fields);
 
@@ -266,28 +266,28 @@ class Abi {
   String? version;
 
   @JsonKey(name: 'types')
-  List<AbiType>? types;
+  List<AbiType?>? types;
 
   @JsonKey(name: 'structs')
-  List<AbiStruct>? structs;
+  List<AbiStruct?>? structs;
 
   @JsonKey(name: 'actions')
-  List<AbiAction>? actions;
+  List<AbiAction?>? actions;
 
   @JsonKey(name: 'tables')
-  List<AbiTable>? tables;
+  List<AbiTable?>? tables;
 
   @JsonKey(name: 'ricardian_clauses')
-  List<AbiRicardianClauses>? ricardian_clauses;
+  List<AbiRicardianClauses?>? ricardian_clauses;
 
   @JsonKey(name: 'error_messages')
-  List<AbiErrorMessages>? error_messages;
+  List<AbiErrorMessages?>? error_messages;
 
   @JsonKey(name: 'abi_extensions')
-  List<AbiExtensions>? abi_extensions;
+  List<AbiExtensions?>? abi_extensions;
 
   @JsonKey(name: 'variants')
-  List<AbiVariants>? variants;
+  List<AbiVariants?>? variants;
 
   Abi(
       {this.abi_extensions,
