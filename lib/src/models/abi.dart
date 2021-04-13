@@ -14,19 +14,19 @@ part 'abi.g.dart';
 @JsonSerializable()
 class AbiResp with ConversionHelper {
   @JsonKey(name: 'account_name')
-  String accountName;
+  String? accountName;
 
   @JsonKey(name: 'code_hash')
-  String codeHash;
+  String? codeHash;
 
   @JsonKey(name: 'abi_hash')
-  String abiHash;
+  String? abiHash;
 
   @JsonKey(name: 'wasm')
-  String wasm;
+  String? wasm;
 
   @JsonKey(name: 'abi', fromJson: _decodeAbi)
-  Abi abi;
+  Abi? abi;
 
   AbiResp();
 
@@ -35,22 +35,22 @@ class AbiResp with ConversionHelper {
 
   Map<String, dynamic> toJson() => _$AbiRespToJson(this);
 
-  static Abi _decodeAbi(Object abi) {
+  static Abi? _decodeAbi(Object? abi) {
     if (abi is String) {
       return _base64ToAbi(abi);
     }
-    return Abi.fromJson(abi);
+    return Abi.fromJson(abi as Map<String, dynamic>);
   }
 
-  static Abi _base64ToAbi(String base64String) {
+  static Abi? _base64ToAbi(String base64String) {
     Uint8List abiBuffer = base64ToBinary(base64String);
 
     return _rawAbiToJson(abiBuffer);
   }
 
   /// Decodes an abi as Uint8List into json. */
-  static Abi _rawAbiToJson(Uint8List rawAbi) {
-    Map<String, Type> abiTypes = ser.getTypesFromAbi(
+  static Abi? _rawAbiToJson(Uint8List rawAbi) {
+    Map<String?, Type> abiTypes = ser.getTypesFromAbi(
         ser.createInitialTypes(), Abi.fromJson(json.decode(abiJson)));
     try {
       var buffer = ser.SerialBuffer(rawAbi);
@@ -59,11 +59,11 @@ class AbiResp with ConversionHelper {
         throw 'Unsupported abi version';
       }
       buffer.restartRead();
-      var t = abiTypes['abi_def'];
-      var b = t.deserialize(t, buffer);
+      var t = abiTypes['abi_def']!;
+      var b = t.deserialize!(t, buffer);
       return Abi.fromJson(json.decode(json.encode(b)));
     } catch (e) {
-      print(e.message);
+      print(e.toString());
       return null;
     }
   }
@@ -75,10 +75,10 @@ class AbiResp with ConversionHelper {
 @JsonSerializable()
 class AbiType {
   @JsonKey(name: 'new_type_name')
-  String new_type_name; //new_type_name
+  String? new_type_name; //new_type_name
 
   @JsonKey(name: 'type')
-  String type;
+  String? type;
 
   AbiType(this.new_type_name, this.type);
 
@@ -94,10 +94,10 @@ class AbiType {
 @JsonSerializable()
 class AbiStructField {
   @JsonKey(name: 'name')
-  String name;
+  String? name;
 
   @JsonKey(name: 'type')
-  String type;
+  String? type;
 
   AbiStructField(this.name, this.type);
 
@@ -113,13 +113,13 @@ class AbiStructField {
 @JsonSerializable()
 class AbiStruct {
   @JsonKey(name: 'name')
-  String name;
+  String? name;
 
   @JsonKey(name: 'base')
-  String base;
+  String? base;
 
   @JsonKey(name: 'fields')
-  List<AbiStructField> fields;
+  List<AbiStructField?>? fields;
 
   AbiStruct(this.name, this.base, this.fields);
 
@@ -135,13 +135,13 @@ class AbiStruct {
 @JsonSerializable()
 class AbiAction {
   @JsonKey(name: 'name')
-  String name;
+  String? name;
 
   @JsonKey(name: 'type')
-  String type;
+  String? type;
 
   @JsonKey(name: 'ricardian_contract')
-  String ricardian_contract; //ricardian_contract
+  String? ricardian_contract; //ricardian_contract
 
   AbiAction(this.name, this.type, this.ricardian_contract);
 
@@ -157,19 +157,19 @@ class AbiAction {
 @JsonSerializable()
 class AbiTable {
   @JsonKey(name: 'name')
-  String name;
+  String? name;
 
   @JsonKey(name: 'type')
-  String type;
+  String? type;
 
   @JsonKey(name: 'index_type')
-  String index_type; //index_type
+  String? index_type; //index_type
 
   @JsonKey(name: 'key_names')
-  List<String> key_names; //key_names
+  List<String>? key_names; //key_names
 
   @JsonKey(name: 'key_types')
-  List<String> key_types; //key_types
+  List<String>? key_types; //key_types
 
   AbiTable(
       this.name, this.type, this.index_type, this.key_names, this.key_types);
@@ -186,10 +186,10 @@ class AbiTable {
 @JsonSerializable()
 class AbiRicardianClauses {
   @JsonKey(name: 'id')
-  String id;
+  String? id;
 
   @JsonKey(name: 'body')
-  String body;
+  String? body;
 
   AbiRicardianClauses(this.id, this.body);
 
@@ -205,10 +205,10 @@ class AbiRicardianClauses {
 @JsonSerializable()
 class AbiErrorMessages {
   @JsonKey(name: 'error_code')
-  String error_code;
+  String? error_code;
 
   @JsonKey(name: 'error_msg')
-  String error_msg;
+  String? error_msg;
 
   AbiErrorMessages(this.error_code, this.error_msg);
 
@@ -224,10 +224,10 @@ class AbiErrorMessages {
 @JsonSerializable()
 class AbiExtensions {
   @JsonKey(name: 'tag')
-  int tag;
+  int? tag;
 
   @JsonKey(name: 'value')
-  String value;
+  String? value;
 
   AbiExtensions(this.tag, this.value);
 
@@ -243,10 +243,10 @@ class AbiExtensions {
 @JsonSerializable()
 class AbiVariants {
   @JsonKey(name: 'name')
-  String name;
+  String? name;
 
   @JsonKey(name: 'types')
-  List<String> types;
+  List<String>? types;
 
   AbiVariants(this.name, this.types);
 
@@ -263,31 +263,31 @@ class AbiVariants {
 @JsonSerializable()
 class Abi {
   @JsonKey(name: 'version')
-  String version;
+  String? version;
 
   @JsonKey(name: 'types')
-  List<AbiType> types;
+  List<AbiType?>? types;
 
   @JsonKey(name: 'structs')
-  List<AbiStruct> structs;
+  List<AbiStruct?>? structs;
 
   @JsonKey(name: 'actions')
-  List<AbiAction> actions;
+  List<AbiAction?>? actions;
 
   @JsonKey(name: 'tables')
-  List<AbiTable> tables;
+  List<AbiTable?>? tables;
 
   @JsonKey(name: 'ricardian_clauses')
-  List<AbiRicardianClauses> ricardian_clauses;
+  List<AbiRicardianClauses?>? ricardian_clauses;
 
   @JsonKey(name: 'error_messages')
-  List<AbiErrorMessages> error_messages;
+  List<AbiErrorMessages?>? error_messages;
 
   @JsonKey(name: 'abi_extensions')
-  List<AbiExtensions> abi_extensions;
+  List<AbiExtensions?>? abi_extensions;
 
   @JsonKey(name: 'variants')
-  List<AbiVariants> variants;
+  List<AbiVariants?>? variants;
 
   Abi(
       {this.abi_extensions,
