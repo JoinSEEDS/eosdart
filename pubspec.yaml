@@ -9,10 +9,11 @@ environment:
 dependencies:
   http: ^0.13.1
   json_annotation: ^4.0.1
-  pointycastle: ^3.0.1
+  pointycastle: ^1.0.1
   eosdart_ecc:
     git:
       url: https://github.com/JoinSEEDS/eosdart_ecc.git
+      ref: flutter_2
 
 dev_dependencies:
   test: ^1.16.8
