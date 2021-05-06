@@ -6,12 +6,16 @@ homepage: https://github.com/primes-network/eosdart
 environment:
   sdk: ">=2.1.0 <3.0.0"
 
+publish_to: none
+
 dependencies:
-  http: ^0.12.0+4
+  http: ^0.13.1
   json_annotation: ^3.0.1
   pointycastle: ^1.0.2
-  eosdart_ecc: ^0.4.3
-#  path: ^1.4.1
+  eosdart_ecc:
+    git:
+      url: https://github.com/JoinSEEDS/eosdart_ecc.git
+      ref: flutter_2_nns
 
 dev_dependencies:
   test: ^1.0.0
